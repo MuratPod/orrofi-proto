@@ -1,8 +1,6 @@
-> **Source:** `MuratPod/ghofi@46e62ba` (`design/v5-proto/`). Clickable design prototype — all data is fictional. Published via GitHub Pages: https://muratpod.github.io/orrofi-proto/
-
 # OrroFi · prototipo clicable v5
 
-Prototipo de diseño, datos ficticios, sin publicar.
+Prototipo de diseño, datos ficticios.
 
 ## Cómo abrirlo
 Doble clic en `index.html` (sin compilar, sin servidor, sin dependencias). Hash vacío → `#/launch`. Botón «Mapa» (esquina, fuera del marco) → `#/all`.
@@ -12,7 +10,7 @@ Orden de carga fijo: `styles.css`, `styles-b.css`, `styles-c.css`, `data.js`, `a
 - `styles.css` — tokens v5 (un solo bloque de color al inicio, sustituible por el brandbook) y componentes.
 - `data.js` — datos ficticios y demo-flags (`OrroData`).
 - `app.js` — núcleo: registro, router por hash, delegación de clics, tema/idioma (`localStorage` clave `orrofi-proto`), helpers `OrroProto.ui`.
-- `screens-a.js` — grupo A (49 ids registrados, incluido `wip` en el núcleo).
+- `screens-a.js` — grupo A (53 ids registrados, incluido `wip` en el núcleo).
 - `screens-b.js` / `styles-b.css` — **sesión 2** (grupo B). `screens-c.js` / `styles-c.css` — **sesión 3** (grupo C).
 
 ## API
@@ -36,7 +34,7 @@ Comprobación: `OrroProto.check()` en consola — lista los `data-go` (y `ctx.go
 
 ## Ids planificados
 - **B:** net-entry net-00 net-sys-localnet net-00b net-00c net-0a net-0b net-0c net-0d net-0e net-sh-mac net-0f net-0g net-0h net-1 net-1b net-1c net-1d net-1e net-2 net-3 net-3b net-4 net-4b net-4c net-4d net-5 net-6 net-7 net-7-confirm net-8 net-sh-bio net-9 net-9b net-sh-delcopy net-12 net-12b
-- **C:** fam-list fam-13a fam-13a2 fam-13b fam-13c fam-13d fam-13e fam-14a fam-14b fam-15 fam-15b fam-15c del-entry del-16a0 del-16a del-16b del-16b2 del-16c del-16d del-16d2 del-16e del-16e2 del-16f del-16g del-16h rst-entry rst-17m rst-17a … rst-17l rp-18a rp-18b
+- **C:** fam-list fam-13a fam-13a2 fam-13b fam-13c fam-13d fam-13e fam-14b fam-15c fam-14a fam-15 fam-15b del-entry del-owner rst-owner del-16a0 del-16a del-16b del-16b2 del-sh-bio del-16c del-16d del-16d2 del-16e del-16e2 del-16f del-16g del-16h rst-entry rst-sms rst-17m rst-17a rst-17b rst-17c rst-17d rst-17e rst-17f rst-17g rst-17h rst-sh-bio rst-sh-bio-c rst-17i rst-17j rst-17k rst-17l rp-18a rp-18b
 Mientras no existan, el salto va a `wip`.
 
 ## Trabajo en paralelo
