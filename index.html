@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OrroFi · prototipo v5</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles-b.css">
+<link rel="stylesheet" href="styles-c.css">
+</head>
+<body>
+<div class="top">
+  <div class="seg0" role="group" aria-label="Tema"><button data-theme-set="dark">Oscuro · HUD</button><button data-theme-set="light">Claro · Tech</button></div>
+  <div class="seg0" role="group" aria-label="Idioma"><button data-lang-set="es">ES</button><button data-lang-set="en">EN</button></div>
+</div>
+<button class="mapbtn" data-go="all">Mapa</button>
+<div class="stage"><div class="pw" id="pw"><div class="phone" id="phone"><div id="screen"></div><div class="toast" id="toast" role="status" aria-live="polite"></div></div></div></div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="screens-a.js"></script>
+<script src="screens-b.js"></script>
+<script src="screens-c.js"></script>
+<script>OrroProto.start();</script>
+</body>
+</html>

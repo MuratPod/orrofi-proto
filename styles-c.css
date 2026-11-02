@@ -1,0 +1,19 @@
+/* styles-c.css — sesión 3 (grupo C). Clases con prefijo .c- ; solo variables de styles.css. */
+.c-card{padding:24px 16px}.c-card .sec2{margin-top:8px;text-align:left}.c-card .h2{margin-top:4px}
+.c-bx{width:72px;height:72px;border-radius:20px;background:var(--ib);display:grid;place-items:center;color:var(--ic);margin:0 auto 14px}
+.c-qr{width:180px;height:180px;color:var(--t);display:block;margin:4px auto}
+.c-hid{min-height:180px;display:grid;place-items:center;align-content:center;color:var(--ic)}
+.c-cen{justify-content:center}
+.c-lnk{color:var(--t);text-decoration:underline;font:inherit;padding:0;text-align:left;display:inline}p.mt12 .c-lnk{display:inline-block;min-height:44px}
+.c-demos{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.c-demo{margin-right:6px;color:var(--m)}
+.c-cam{height:260px;display:grid;place-items:center;background:var(--c-solid);position:relative}
+.c-cam i{width:170px;height:170px;border-radius:20px;border:3px solid var(--a)}
+.c-cam .pill{position:absolute;left:12px;top:12px}
+.c-two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.c-two .cd{margin:0;padding:12px 10px}
+.c-cap{min-height:64px}.c-dig{font-size:24px;letter-spacing:.08em;text-align:center;margin-top:8px}
+.c-opt{min-height:52px;align-items:center;margin:0}
+.c-hint{display:none;margin:4px 4px 0}
+.c-g:has(.c-o2:checked) .c-hint{display:block}
+.gate.c-g:has(input:not(:checked)) .gate-btn:not([disabled]){opacity:1}
+.lockwrap .btn{margin-top:4px}
