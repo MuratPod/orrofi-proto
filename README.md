@@ -41,6 +41,9 @@ Mientras no existan, el salto va a `wip`.
 Sesión 2 solo toca `screens-b.js` y `styles-b.css`; sesión 3 solo `screens-c.js` y `styles-c.css`. No se modifican `index.html`, `styles.css`, `data.js`, `app.js`, `screens-a.js`.
 Textos Legal como marcadores: `[RESPONSABLE]`, `[EMAIL PRIVACIDAD]`, `[URL POLÍTICA]`, `[OPERADOR SOCIO / ninguno]`, `[TELÉFONO GRATUITO]`.
 
+## order-movil
+- Requisito para Server: la baja debe ser efectiva en un máximo de 2 días hábiles; si no se garantiza, no prometerlo en el resumen.
+
 ## Simplificaciones de demo (conocidas)
 - «Añadir e-mail» en `rst-17m` y `del-16a0` solo muestra un toast y sigue: no hay pantalla de entrada de e-mail.
 - `freshSms` se guarda en `localStorage` como el resto de flags; se reinicia desde `#/all`.

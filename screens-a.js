@@ -264,7 +264,7 @@
   function tl(es, en) { return document.documentElement.lang === 'en' ? en : es; }
   var D_END = ['17 de noviembre de 2026', '17 November 2026'], D_START = ['18 de noviembre de 2026', '18 November 2026'];
   function startTxt(c) {
-    return mv.early ? c.t('Empieza hoy', 'Starts today') :
+    return mv.early ? c.t('Tu servicio empieza hoy. Puedes desistir hasta el ' + D_END[0] + ' incluido y pagarías solo la parte del servicio recibida.', 'Your service starts today. You can withdraw until ' + D_END[1] + ' (inclusive) and would pay only for the part of the service received.') :
       c.t('Puedes desistir hasta el ' + D_END[0] + ' incluido. Tu servicio empezará el ' + D_START[0] + '.', 'You can withdraw until ' + D_END[1] + ' (inclusive). Your service will start on ' + D_START[1] + '.');
   }
   document.addEventListener('change', function (e) {
@@ -310,7 +310,7 @@
   });
   R('order-movil-ok', ['Contratar · móvil · hecho', 'Add a service · mobile · done'], 'fiber', 'order-movil', function (c) {
     var t = c.t;
-    var when = mv.early ? t('El servicio empieza hoy.', 'The service starts today.') : t('Tu servicio empezará el ' + D_START[0] + '.', 'Your service will start on ' + D_START[1] + '.');
+    var when = mv.early ? t('Tu servicio empieza hoy. Puedes desistir hasta el ' + D_END[0] + ' incluido y pagarías solo la parte del servicio recibida.', 'Your service starts today. You can withdraw until ' + D_END[1] + ' (inclusive) and would pay only for the part of the service received.') : t('Tu servicio empezará el ' + D_START[0] + '.', 'Your service will start on ' + D_START[1] + '.');
     return top('', { back: false }) + state('check', t('Línea móvil contratada', 'Mobile line ordered'), '<span class="hud">MOV-48211207</span><br>' + when + ' ' + t('Te enviaremos la SIM y un correo de confirmación.', 'We will send you the SIM and a confirmation email.'),
       btn(t('Listo', 'Done'), { go: 'mobile' }));
   });
