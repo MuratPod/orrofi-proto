@@ -254,8 +254,65 @@
       '<div class="sec" style="margin-top:4px">' + t('Precios de ejemplo', 'Example prices') + ' · ' + t('IVA 21 % incl.', 'VAT 21% incl.') + '</div>' +
       PLANS.map(function (p, i) { return '<button class="opt ' + (i === ord.plan ? 'on' : '') + '" data-pick="x" data-ord="plan:' + i + '" style="width:100%;text-align:left"><span class="radio"></span><span class="sp"><b style="font-weight:500">' + p[0] + '</b></span><b class="mono">' + p[1] + ' €/' + t('mes', 'mo') + '</b></button>'; }).join('') +
       btn(t('Continuar', 'Continue'), { go: 'order-date' }) + '</div>' +
-      '<div data-show="m" hidden><div class="cd"><b>' + t('Líneas móviles', 'Mobile lines') + '</b><p class="sec2 mt8">' + t('Las altas de móvil las gestiona una persona del equipo.', 'Mobile sign-ups are handled by a team member.') + '</p></div>' +
-      btn(t('Quiero una línea móvil', 'I want a mobile line'), { toast: t('Una persona te contactará', 'A person will contact you') }) + '<p class="dis">' + t('Nunca te pediremos DNI ni IBAN.', 'We will never ask for your ID or IBAN.') + '</p></div></div>';
+      '<div data-show="m" hidden><div class="cd"><b>' + t('Líneas móviles', 'Mobile lines') + '</b></div>' +
+      btn(t('Quiero una línea móvil', 'I want a mobile line'), { go: 'order-movil' }) + '<p class="dis">' + t('Nunca te pediremos DNI ni IBAN.', 'We will never ask for your ID or IBAN.') + '</p></div></div>';
+  });
+  /* ---------- móvil: contratación (Resumen del contrato + casillas Legal) ---------- */
+  var mv = { terms: 0, early: 0, mkt: 0 };
+  var MES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  var MON = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function tl(es, en) { return document.documentElement.lang === 'en' ? en : es; }
+  var D_END = ['17 de noviembre de 2026', '17 November 2026'], D_START = ['18 de noviembre de 2026', '18 November 2026'];
+  function startTxt(c) {
+    return mv.early ? c.t('Empieza hoy', 'Starts today') :
+      c.t('Puedes desistir hasta el ' + D_END[0] + ' incluido. Tu servicio empezará el ' + D_START[0] + '.', 'You can withdraw until ' + D_END[1] + ' (inclusive). Your service will start on ' + D_START[1] + '.');
+  }
+  document.addEventListener('change', function (e) {
+    var el = e.target, k = el.dataset && el.dataset.mv;
+    if (!k) return;
+    mv[k] = el.checked ? 1 : 0;
+    var cp = document.getElementById('mv-start'); if (cp && k === 'early') cp.textContent = startTxt({ t: tl });
+  }, true);
+  R('order-movil', ['Contratar · móvil', 'Add a service · mobile'], 'fiber', 'order', function (c) {
+    var t = c.t;
+    var EARLY = t('Quiero que el servicio empiece ya, antes de que terminen los 14 días para desistir. Si desisto, pagaré solo la parte del servicio que haya recibido hasta ese momento. Sé que, si el servicio se presta por completo antes de que desista, perderé el derecho a desistir.', 'I want the service to start now, before the 14-day withdrawal period ends. If I withdraw, I will pay only for the part of the service I have received up to that point. I understand that if the service is fully provided before I withdraw, I will lose my right to withdraw.');
+    var PRO = t('Si desistes después de pedir el inicio inmediato, pagarás solo los días de servicio recibidos: precio del periodo × días de servicio ÷ días del periodo. Te devolvemos el resto en un plazo máximo de 14 días desde que nos comuniques el desistimiento, por el mismo medio de pago.', 'If you withdraw after asking for an immediate start, you pay only for the days of service received: period price × days of service ÷ days in the period. We refund the rest within 14 days of your withdrawal notice, using the same payment method.');
+    function it(n, a, b) { return '<p class="sec2 mt8"><b>' + n + '. ' + a + '</b><br>' + b + '</p>'; }
+    var resumen = '<div class="cd"><div class="hud mb8">' + t('OrroFi Móvil 30 GB', 'OrroFi Mobile 30 GB') + '</div>' +
+      '<p class="sec2">' + t('[RESPONSABLE] · [DIRECCIÓN] · [EMAIL] · [TELÉFONO] · Reclamaciones: [CONTACTO RECLAMACIONES]', '[RESPONSABLE] · [ADDRESS] · [EMAIL] · [PHONE] · Complaints: [COMPLAINTS CONTACT]') + '</p>' +
+      '<p class="sec2 mt8"><b>' + t('Resumen del contrato', 'Contract summary') + '</b> · ' + t('Fecha: 3 de noviembre de 2026', 'Date: 3 November 2026') + '</p>' +
+      '<p class="sec2 mt8">' + t('El presente resumen del contrato recoge los principales elementos de esta oferta de servicios, tal como exige el Derecho de la UE. Ayuda a comparar ofertas de servicios. La información completa sobre el servicio figura en otros documentos.', 'This contract summary provides the main elements of this service offer as required by EU law. It helps to make a comparison between service offers. Complete information about the service is provided in other documents.') + '</p>' +
+      it(1, t('Servicios y equipos', 'Services and equipment'), t('Telefonía móvil e internet móvil: 1 línea; 30 GB/mes; llamadas ilimitadas a fijos y móviles nacionales; SMS: [SMS INCLUIDOS]; itinerancia en la UE incluida según la política de uso razonable ([LÍMITE ROAMING UE] GB/mes). Equipo: no incluido (solo tarjeta SIM).', 'Mobile voice and mobile internet: 1 line; 30 GB/month; unlimited calls to national landlines and mobiles; SMS: [SMS INCLUDED]; EU roaming included under the fair use policy ([EU ROAMING LIMIT] GB/month). Equipment: not included (SIM card only).')) +
+      it(2, t('Velocidades del servicio de internet y vías de recurso', 'Speeds of the internet service and remedies'), t('Internet móvil 4G/5G: velocidad máxima estimada de bajada 150 Mbit/s y de subida 50 Mbit/s. Si la velocidad u otra calidad del servicio difiere de forma continua o reiterada de lo indicado, puedes reclamar a [RESPONSABLE] ([CONTACTO RECLAMACIONES]); si no se resuelve en un mes o no estás conforme, puedes acudir a la Oficina de Atención al Usuario de Telecomunicaciones o a la Junta Arbitral de Consumo. [REMEDIOS SEGÚN CONTRATO: p. ej. resolución sin coste / compensación]', '4G/5G mobile internet: estimated maximum download speed 150 Mbit/s and upload speed 50 Mbit/s. If the speed or other quality of service continuously or regularly differs from what is stated, you can complain to [RESPONSABLE] ([COMPLAINTS CONTACT]); if it is not resolved within one month or you disagree, you can go to the Telecommunications User Service Office or the Consumer Arbitration Board. [REMEDIES UNDER CONTRACT]')) +
+      it(3, t('Precio', 'Price'), t('15,00 €/mes, IVA incluido. Alta y tarjeta SIM: 0 €. Al agotar los 30 GB: [QUÉ PASA: velocidad reducida a X / X € por bono de Y GB]. Llamadas y SMS fuera de lo incluido (internacionales, tarificación adicional): [PRECIOS]. Las tarifas de servicios adicionales no incluidos están disponibles en [ENLACE TARIFAS].', '€15.00/month, VAT included. Activation and SIM card: €0. Once the 30 GB are used up: [WHAT HAPPENS]. Calls and SMS not included (international, premium rate): [PRICES]. Prices of additional services not included are available at [PRICES LINK].')) +
+      it(4, t('Duración, renovación y rescisión', 'Duration, renewal and termination'), t('Sin permanencia: contrato de duración indefinida, que se renueva cada mes automáticamente. Puedes darte de baja en cualquier momento desde la app, sin coste; la baja es efectiva en 2 días hábiles. No hay penalización por baja anticipada. Sin terminal: no aplica desbloqueo.', 'No minimum term: open-ended contract that renews automatically every month. You can cancel at any time in the app at no cost; cancellation takes effect within 2 working days. No early termination fee. No device: unlocking does not apply.')) +
+      it(5, t('Funciones para usuarios finales con discapacidad', 'Features for end-users with disabilities'), t('[PRINCIPALES SERVICIOS: p. ej. facturas y app accesibles, atención por texto, tarifas especiales]. Más detalles en [ENLACE].', '[MAIN SERVICES]. More details at [LINK].')) +
+      it(6, t('Otra información pertinente', 'Other relevant information'), t('Tienes 14 días naturales desde la celebración del contrato para desistir sin dar motivos. Si pides que el servicio empiece antes, y luego desistes, pagarás solo la parte del servicio recibida.', 'You have 14 days from the conclusion of the contract to withdraw without giving any reason. If you ask for the service to start earlier and then withdraw, you will pay only for the part of the service you have received.')) +
+      '</div>' +
+      btn(t('Descargar el resumen del contrato (PDF)', 'Download the contract summary (PDF)'), { toast: t('PDF de ejemplo', 'Sample PDF') }, 'g') +
+      '<p class="dis">' + t('Te recomendamos descargarlo y guardarlo: te servirá como referencia y no cambiará.', 'We recommend you download and keep it: it is for your reference and will not change.') + '</p>';
+    function lk(x) { return '<a href="#" data-toast="' + t('Documento de ejemplo', 'Sample document') + '">' + x + '</a>'; }
+    var TERMS = t('Acepto las ' + lk('condiciones del servicio') + '. He leído la ' + lk('política de privacidad') + ' y la ' + lk('información sobre el desistimiento') + '.', 'I accept the ' + lk('terms of service') + '. I have read the ' + lk('privacy policy') + ' and the ' + lk('withdrawal information') + '.');
+    var MKT = t('Quiero recibir ofertas y novedades de OrroFi por e-mail, SMS y notificaciones. Puedo retirar el consentimiento cuando quiera desde la app ([RUTA AJUSTES]) o con el enlace de baja de cada mensaje.', 'I want to receive OrroFi offers and news by e-mail, SMS and notifications. I can withdraw my consent at any time in the app ([SETTINGS PATH]) or via the unsubscribe link in each message.');
+    return top(t('Línea móvil', 'Mobile line')) +
+      '<div class="sec">' + t('Tarifa', 'Plan') + ' · ' + t('IVA incl.', 'VAT incl.') + '</div>' +
+      '<div class="opt on" style="width:100%;text-align:left"><span class="radio"></span><span class="sp"><b style="font-weight:500">' + t('Móvil 30 GB', 'Mobile 30 GB') + '</b></span><b class="mono">' + t('15,00 €/mes', '€15.00/mo') + '</b></div>' +
+      resumen +
+      '<div class="gate">' +
+      '<label class="chk"><input type="checkbox" data-gate data-mv="terms"' + (mv.terms ? ' checked' : '') + '><span>' + TERMS + '</span></label>' +
+      '<label class="chk mt8"><input type="checkbox" data-mv="early"' + (mv.early ? ' checked' : '') + '><span>' + EARLY + '</span></label>' +
+      '<p class="dis">' + PRO + '</p>' +
+      '<label class="chk mt8"><input type="checkbox" data-mv="mkt"' + (mv.mkt ? ' checked' : '') + '><span>' + MKT + '</span></label>' +
+      '<p class="sec2 mt8"><b>' + t('15,00 €/mes · sin permanencia', '€15.00/month · no minimum term') + '</b></p>' +
+      '<button class="btn gate-btn" data-go="order-movil-ok"' + (mv.terms ? '' : ' disabled aria-disabled="true"') + '>' + t('Contratar con obligación de pago', 'Order with obligation to pay') + '</button></div>' +
+      '<p class="dis" id="mv-start">' + startTxt(c) + '</p>' +
+      btn(t('Volver', 'Back'), { back: true }, 'g');
+  });
+  R('order-movil-ok', ['Contratar · móvil · hecho', 'Add a service · mobile · done'], 'fiber', 'order-movil', function (c) {
+    var t = c.t;
+    var when = mv.early ? t('El servicio empieza hoy.', 'The service starts today.') : t('Tu servicio empezará el ' + D_START[0] + '.', 'Your service will start on ' + D_START[1] + '.');
+    return top('', { back: false }) + state('check', t('Línea móvil contratada', 'Mobile line ordered'), '<span class="hud">MOV-48211207</span><br>' + when + ' ' + t('Te enviaremos la SIM y un correo de confirmación.', 'We will send you the SIM and a confirmation email.'),
+      btn(t('Listo', 'Done'), { go: 'mobile' }));
   });
   R('order-date', ['Contratar · fecha', 'Add a service · date'], 'fiber', 'order', function (c) {
     var t = c.t;
